@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <head>
   <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inclusive+Sans&family=Open+Sans:wght@300&family=Poppins:wght@200&family=Roboto+Condensed:wght@700&family=Work+Sans:wght@200&display=swap"
+    rel="stylesheet"
+  />
 </head>
 <body>
   <div class="todo">
@@ -15,6 +21,14 @@
   <div class="additem">
     <input type="text" id="textInput" placeholder="Enter your item" />
     <button id="addItemButton">Add Item</button>
+  </div>
+
+  <div class="login">
+    <% if (!loggedIn) { %>
+    <h2><a href="/auth/login">Login</a> / <a href="/auth/signup">Signup</a></h2>
+    <% } else { %>
+    <h2>You are logged in.</h2>
+    <% } %>
   </div>
 
   <script>
