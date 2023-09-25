@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<head>
+  <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+</head>
+<body>
+  <div class="todo">
+    <h1>Todo:</h1>
+    <ul id="myList">
+      <% todo_list.forEach((el, i)=>{ %>
+      <li class="listItems" id="listItem<%=i%>"><%=el%></li>
+      <% }) %>
+    </ul>
+  </div>
+
+  <div class="additem">
+    <input type="text" id="textInput" placeholder="Enter your item" />
+    <button id="addItemButton">Add Item</button>
+  </div>
+
+  <script>
+    document.getElementById("addItemButton").addEventListener("click", () => {
+      let ul = document.getElementById("myList");
+      let customText = document.getElementById("textInput").value;
+
+      let li = document.createElement("li");
+      li.appendChild(document.createTextNode(customText));
+      ul.appendChild(li);
+
+      li.addEventListener("click", () => {
+        li.remove();
+      });
+    });
+
+    let items = document.getElementsByClassName("listItems");
+    for (let i = 0; i < items.length; i++) {
+      items[i].addEventListener("click", () => {
+        items[i].remove();
+      });
+    }
+  </script>
+</body>

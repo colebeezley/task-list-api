@@ -1,0 +1,21 @@
+{
+  "name": "task-list-api",
+  "version": "1.0.0",
+  "description": "Prompt:\r Create a simple API for managing a to-do list. You can implement features like adding, updating, and deleting tasks.",
+  "main": "index.ts",
+  "scripts": {
+    "start": "nodemon ./index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.0.1",
+    "react": "^18.2.0",
+    "ts-node": "^10.9.1"
+  }
+}
