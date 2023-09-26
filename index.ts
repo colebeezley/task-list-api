@@ -26,7 +26,7 @@ app.use(
   })
 );
 
-require("./src/config/passport.js")(app);
+require("./src/config/passport.ts")(app);
 
 app.set("views", __dirname + "/src/views");
 app.set("view engine", "ejs");
