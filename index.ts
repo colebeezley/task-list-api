@@ -8,6 +8,7 @@ dotenv.config();
 
 const users = require(__dirname + "/src/users.json");
 const authRouter = require(__dirname + "/src/routers/authRouter.ts");
+const apiRouter = require(__dirname + "/src/routers/apiRouter.ts");
 
 const app = express();
 
@@ -32,23 +33,40 @@ app.set("view engine", "ejs");
 
 // var
 
-let todo_list: string[] = ["groceries", "work"];
-console.log(todo_list);
-
 // routing
 
 app.use("/auth", authRouter);
+app.use("/api", apiRouter);
 
 // defaults
 
-app.get("/", (req: any, res: { render: (arg0: string, arg1: {}) => void }) => {
-  let loggedIn = req.user ? true : false;
+app.get(
+  "/",
+  (
+    req: any,
+    res: {
+      render: (
+        arg0: string,
+        arg1: { todo_list: string[]; loggedIn: boolean; username: string }
+      ) => void;
+    }
+  ) => {
+    let loggedIn = req.user ? true : false;
+    let username = loggedIn ? req.user.username : "";
+    let todo_list: string[] = ["groceries", "work"];
 
-  res.render("index", {
-    todo_list: todo_list,
-    loggedIn: loggedIn,
-  });
-});
+    if (loggedIn) {
+      todo_list = req.user.todo_list;
+      console.log(todo_list);
+    }
+
+    res.render("index", {
+      todo_list: todo_list,
+      loggedIn: loggedIn,
+      username: username,
+    });
+  }
+);
 
 app.get("/api/users", (req: any, res: { json: (arg0: any) => any }) => {
   return res.json(users);

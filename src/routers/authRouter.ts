@@ -2,13 +2,13 @@ import express from "express";
 import morgan from "morgan";
 import passport from "passport";
 import mongoose from "mongoose";
-const User = require("./../models/User.js");
+const User = require("./../models/User.ts");
 
 const authRouter = express.Router();
 
 authRouter.route("/signup").post((req, res) => {
   const { username, password } = req.body;
-  const user = { username, password, recent: [] };
+  const user = { username, password, todo_list: [] };
 
   async function pushUser() {
     await mongoose.connect(process.env.MONGO_KEY!, { dbName: "task-list-api" });
@@ -27,6 +27,7 @@ authRouter.route("/signup").post((req, res) => {
           _id: results.insertedId.toString(),
           username: username,
           password: password,
+          todo_list: [],
         },
         () => {
           res.redirect("/");

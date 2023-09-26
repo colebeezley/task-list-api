@@ -25,9 +25,10 @@
 
   <div class="login">
     <% if (!loggedIn) { %>
+    <h2>Login to save changes.</h2>
     <h2><a href="/auth/login">Login</a> / <a href="/auth/login">Signup</a></h2>
     <% } else { %>
-    <h2>You are logged in.</h2>
+    <h2>Hello, <%=username%>. You are logged in.</h2>
     <% } %>
   </div>
 
@@ -41,15 +42,36 @@
       ul.appendChild(li);
 
       li.addEventListener("click", () => {
+        removeUserItem(li.textContent);
         li.remove();
       });
+      addUserItem(customText);
     });
 
     let items = document.getElementsByClassName("listItems");
     for (let i = 0; i < items.length; i++) {
       items[i].addEventListener("click", () => {
+        removeUserItem(items[i].textContent);
         items[i].remove();
       });
+    }
+
+    function removeUserItem(item) {
+      const xhr = new XMLHttpRequest();
+      const endpoint = "/api/removeItem";
+      const data = JSON.stringify({ removedItem: item });
+      xhr.open("POST", endpoint, true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.send(data);
+    }
+
+    function addUserItem(item) {
+      const xhr = new XMLHttpRequest();
+      const endpoint = "/api/addItem";
+      const data = JSON.stringify({ addedItem: item });
+      xhr.open("POST", endpoint, true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.send(data);
     }
   </script>
 </body>
