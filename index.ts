@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import passport from "passport";
 import session from "express-session";
+const User = require("./src/models/User.ts");
 dotenv.config();
 
 const users = require(__dirname + "/src/users.json");
@@ -56,15 +57,28 @@ app.get(
     let todo_list: string[] = ["groceries", "work"];
 
     if (loggedIn) {
-      todo_list = req.user.todo_list;
-      console.log(todo_list);
+      async function updateItems(req: any) {
+        await mongoose.connect(process.env.MONGO_KEY!, {
+          dbName: "task-list-api",
+        });
+        const currUser = await User.findOne({
+          username: req.user.username,
+        });
+        todo_list = currUser.todo_list;
+        res.render("index", {
+          todo_list: todo_list,
+          loggedIn: loggedIn,
+          username: username,
+        });
+      }
+      updateItems(req);
+    } else {
+      res.render("index", {
+        todo_list: todo_list,
+        loggedIn: loggedIn,
+        username: username,
+      });
     }
-
-    res.render("index", {
-      todo_list: todo_list,
-      loggedIn: loggedIn,
-      username: username,
-    });
   }
 );
 
