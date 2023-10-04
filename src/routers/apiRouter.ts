@@ -49,4 +49,20 @@ apiRouter.route("/removeItem").delete((req, res) => {
   }
 });
 
+apiRouter.route("/:user/items").get((req, res) => {
+  // res.status(200).send("received");
+
+  async function getItems() {
+    await mongoose.connect(process.env.MONGO_KEY!, {
+      dbName: "task-list-api",
+    });
+    const currUser = await User.findOne({
+      username: req.params.user,
+    });
+    const items = currUser.todo_list;
+    res.json(items);
+  }
+  getItems();
+});
+
 module.exports = apiRouter;
